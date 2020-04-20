@@ -2,7 +2,8 @@
   <div class="card-header">{{title}}</div>
   <div class="card-body">
     <button class="btn btn-primary my-2" routerLink="/students/forms">Create</button>
-    <table class="table table-hover table-striped">
+    <div class="alert alert-info" *ngIf="students?.length==0">No results</div>
+    <table class="table table-hover table-striped" *ngIf="students?.length>0">
       <thead>
         <tr>
           <th>id</th>
