@@ -2,6 +2,7 @@ import { StudentService } from './../../services/student.service';
 import { Student } from './../../models/student';
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
+import Swal from 'sweetalert2'
 
 @Component({
   selector: 'app-students-forms',
@@ -34,7 +35,7 @@ export class StudentsFormsComponent implements OnInit {
     this.studentService.create(this.student).subscribe(
       (student) => {
         console.log(student);
-        alert(`Student ${student.name} created successfully`);
+        Swal.fire('New:', `Student ${student.name} created successfully`, 'success');
         this.router.navigate(['/students']);
       },
       (err) => {
@@ -51,7 +52,7 @@ export class StudentsFormsComponent implements OnInit {
     this.studentService.edit(this.student).subscribe(
       (student) => {
         console.log(student);
-        alert(`Student ${student.name} updated successfully`);
+        Swal.fire('Edited',`Student ${student.name} updated successfully`, 'success');
         this.router.navigate(['/students']);
       },
       (err) => {
