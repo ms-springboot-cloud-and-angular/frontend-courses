@@ -31,7 +31,7 @@ export class StudentService {
   }
 
   public create(student: Student): Observable<Student> {
-    return this.httpClient.post<Student>(this.baseEndpoint, student, { headers: this.headers });
+    return this.httpClient.post<Student>(this.baseEndpoint, student, { headers: this.headers })
   }
 
   public edit(student: Student): Observable<Student> {
