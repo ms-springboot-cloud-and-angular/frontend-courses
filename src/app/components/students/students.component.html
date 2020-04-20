@@ -10,6 +10,7 @@
           <th>lastname</th>
           <th>email</th>
           <th>createAt</th>
+          <th>Edit</th>
         </tr>
       </thead>
       <tbody>
@@ -19,6 +20,7 @@
           <td>{{student.lastname | uppercase}}</td>
           <td>{{student.email| lowercase}}</td>
           <td>{{student.createAt | date: 'yyyy/MM/dd'}}</td>
+          <td><button class="btn btn-secondary btn-sm" [routerLink]="['/students/forms', student.id]">Edit</button></td>
         </tr>
       </tbody>
     </table>
