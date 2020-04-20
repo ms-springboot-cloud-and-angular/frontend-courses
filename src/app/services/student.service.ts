@@ -2,7 +2,9 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Student } from '../models/student';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import 'rxjs/add/operator/do';
+import 'rxjs/add/operator/map';
+
 
 @Injectable({
   providedIn: 'root'
@@ -15,9 +17,8 @@ export class StudentService {
   constructor(private httpClient: HttpClient) { }
 
   public list(): Observable<Student[]> {
-    return this.httpClient.get(this.baseEndpoint).pipe(
-      map(students => students as Student[])
-    );
+    return this.httpClient.get<Student[]>(this.baseEndpoint)
+    .do( res => console.log('HTTP response:', res));
   }
 
   public listPageable(page: string, size: string): Observable<any> {
