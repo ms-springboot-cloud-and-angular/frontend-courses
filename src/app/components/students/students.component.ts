@@ -18,4 +18,13 @@ export class StudentsComponent implements OnInit {
     this.studentService.list().subscribe(students => this.students = students);
   }
 
+  public delete(student: Student): void {
+    if (confirm(`Are you sure you want to eliminate the student ${student.name} ?`)) {
+      this.studentService.delete(student.id).subscribe(() => {
+        this.students = this.students.filter( s => s !== student);
+        alert(`Student ${student.name} successfully removed`);
+      });
+    }
+  }
+
 }
