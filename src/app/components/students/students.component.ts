@@ -1,7 +1,8 @@
 import { Student } from './../../models/student';
 import { StudentService } from './../../services/student.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import Swal from 'sweetalert2';
+import { PageEvent, MatPaginator } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-students',
@@ -11,13 +12,33 @@ import Swal from 'sweetalert2';
 export class StudentsComponent implements OnInit {
   title: string = 'Students list';
   students: Student[];
+  totalRows = 0;
+  totalPerPage = 5;
+  currentPage = 0;
+  pageSizeOptions: number[] = [5, 10, 25, 100];
 
   constructor(private studentService: StudentService) { }
 
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+
   ngOnInit(): void {
+    this.calculateRange();
+  }
+
+  private calculateRange(): void {
     this.studentService
-      .list()
-      .subscribe((students) => (this.students = students));
+      .listPageable(this.currentPage.toString(), this.totalPerPage.toString())
+      .subscribe((p) => {
+        this.students = p.content as Student[];
+        this.totalRows = p.totalElements;
+        this.paginator._intl.itemsPerPageLabel='Students per page';
+      });
+  }
+
+  public pageable(event: PageEvent): void {
+    this.currentPage = event.pageIndex;
+    this.totalPerPage = event.pageSize;
+    this.calculateRange();
   }
 
   public delete(student: Student): void {
@@ -32,7 +53,8 @@ export class StudentsComponent implements OnInit {
     }).then((result) => {
       if (result.value) {
         this.studentService.delete(student.id).subscribe(() => {
-          this.students = this.students.filter((s) => s !== student);
+          // this.students = this.students.filter((s) => s !== student);
+          this.calculateRange();
           Swal.fire(
             'Deleted',
             `Student ${student.name} successfully removed`,

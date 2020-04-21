@@ -9,6 +9,8 @@ import { StudentsComponent } from './components/students/students.component';
 import { CoursesComponent } from './components/courses/courses.component';
 import { ExamsComponent } from './components/exams/exams.component';
 import { StudentsFormsComponent } from './components/students/students-forms.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 @NgModule({
   declarations: [
@@ -23,7 +25,9 @@ import { StudentsFormsComponent } from './components/students/students-forms.com
     AppRoutingModule,
     LayoutModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    BrowserAnimationsModule,
+    MatPaginatorModule
   ],
   providers: [],
   bootstrap: [AppComponent]
