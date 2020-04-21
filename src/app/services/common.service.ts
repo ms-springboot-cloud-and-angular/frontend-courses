@@ -8,7 +8,7 @@ export abstract class CommonService<E extends Generic> {
   protected baseEndpoint: string;
   protected headers: HttpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(protected httpClient: HttpClient) { }
 
   public list(): Observable<E[]> {
     return this.httpClient.get<E[]>(this.baseEndpoint).do(res => console.log('HTTP response:', res));

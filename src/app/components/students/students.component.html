@@ -2,8 +2,8 @@
   <div class="card-header">{{title}}</div>
   <div class="card-body">
     <button class="btn btn-primary my-2" routerLink="/students/forms">Create</button>
-    <div class="alert alert-info" *ngIf="students?.length==0">No results</div>
-    <table class="table table-hover table-striped" *ngIf="students?.length>0">
+    <div class="alert alert-info" *ngIf="list?.length==0">No results</div>
+    <table class="table table-hover table-striped" *ngIf="list?.length>0">
       <thead>
         <tr>
           <th>id</th>
@@ -16,7 +16,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let student of students">
+        <tr *ngFor="let student of list">
           <td>{{student.id}}</td>
           <td>{{student.name | uppercase}}</td>
           <td>{{student.lastname | uppercase}}</td>
