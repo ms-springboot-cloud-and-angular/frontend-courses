@@ -23,7 +23,10 @@ export abstract class CommonFormsComponent<E extends Generic, S extends CommonSe
       if (id) {
         this.service
           .view(id)
-          .subscribe((model) => (this.model = model));
+          .subscribe(model => {
+            this.model = model;
+            this.title = `Edit ${this.modelName}`;
+          });
       }
     });
   }
@@ -49,7 +52,7 @@ export abstract class CommonFormsComponent<E extends Generic, S extends CommonSe
     this.service.edit(this.model).subscribe(
       (model) => {
         console.log(model);
-        Swal.fire('Edited',`${this.modelName} ${model.name} updated successfully`, 'success');
+        Swal.fire('Edited', `${this.modelName} ${model.name} updated successfully`, 'success');
         this.router.navigate([this.redirect]);
       },
       (err) => {

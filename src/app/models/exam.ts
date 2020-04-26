@@ -7,6 +7,7 @@ export class Exam implements Generic {
   name: string;
   createAt: string;
   questions: Question[] = [];
-  subject: Subject;
+  parentSubject: Subject;
+  childrenSubject: Subject;
   answered: boolean;
 }
