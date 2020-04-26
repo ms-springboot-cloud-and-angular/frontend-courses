@@ -35,9 +35,7 @@ export class ExamFormsComponent extends CommonFormsComponent<Exam, ExamService> 
           .subscribe(model => {
             this.model = model;
             this.title = `Edit ${this.modelName}`;
-            this.service.findAllSubjects().subscribe(
-              subjects => this.childrenSubjects = subjects.filter(s => s.parent && s.parent.id == this.model.parentSubject.id)
-            );
+            this.loadChildrens();
           });
       }
     });
