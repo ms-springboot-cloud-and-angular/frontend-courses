@@ -1,3 +1,4 @@
+import { AssignStudentsComponent } from './components/courses/assign-students.component';
 import { CoursesFormsComponent } from './components/courses/courses-forms.component';
 import { StudentsFormsComponent } from './components/students/students-forms.component';
 import { ExamsComponent } from './components/exams/exams.component';
@@ -16,6 +17,8 @@ const routes: Routes = [
   { path: 'courses', component: CoursesComponent },
   { path: 'courses/forms', component: CoursesFormsComponent },
   { path: 'courses/forms/:id', component: CoursesFormsComponent },
+  { path: 'courses/assign-students/:id', component: AssignStudentsComponent },
+
   { path: 'exams', component: ExamsComponent },
   { path: 'exams/forms', component: ExamFormsComponent },
   { path: 'exams/forms/:id', component: ExamFormsComponent },

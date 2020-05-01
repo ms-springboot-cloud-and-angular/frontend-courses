@@ -2,7 +2,7 @@ import { LayoutModule } from './layout/layout.module';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
-import { FormsModule} from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { StudentsComponent } from './components/students/students.component';
@@ -13,6 +13,11 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { CoursesFormsComponent } from './components/courses/courses-forms.component';
 import { ExamFormsComponent } from './components/exams/exam-forms.component';
+import { MatTableModule } from '@angular/material/table';
+import { MatInputModule } from '@angular/material/input';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatButtonModule } from '@angular/material/button';
+import { AssignStudentsComponent } from './components/courses/assign-students.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +27,8 @@ import { ExamFormsComponent } from './components/exams/exam-forms.component';
     ExamsComponent,
     StudentsFormsComponent,
     CoursesFormsComponent,
-    ExamFormsComponent
+    ExamFormsComponent,
+    AssignStudentsComponent
   ],
   imports: [
     BrowserModule,
@@ -31,7 +37,11 @@ import { ExamFormsComponent } from './components/exams/exam-forms.component';
     HttpClientModule,
     FormsModule,
     BrowserAnimationsModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatTableModule,
+    MatInputModule,
+    MatCheckboxModule,
+    MatButtonModule
   ],
   providers: [],
   bootstrap: [AppComponent]
