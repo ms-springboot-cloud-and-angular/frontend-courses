@@ -35,4 +35,8 @@ export class StudentService extends CommonService<Student> {
     formData.append('email', student.email);
     return this.httpClient.put<Student>(`${this.baseEndpoint}/edit-with-photo/${student.id}`, formData);
   }
+
+  public filterByName(name: String): Observable<Student[]> {
+    return this.httpClient.get<Student[]>(`${this.baseEndpoint}/filter/${name}`);
+  }
 }
