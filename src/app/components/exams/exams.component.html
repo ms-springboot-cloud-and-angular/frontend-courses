@@ -9,6 +9,7 @@
           <th>id</th>
           <th>name</th>
           <th>Subject</th>
+          <th>Questions</th>
           <th>createAt</th>
           <th>Edit</th>
           <th>Delete</th>
@@ -19,6 +20,7 @@
           <td>{{exam.id}}</td>
           <td>{{exam.name | uppercase}}</td>
           <td>{{exam.parentSubject?.name}} / {{exam.childrenSubject?.name}}</td>
+          <td>{{exam.questions.length}}</td>
           <td>{{exam.createAt | date: 'yyyy/MM/dd'}}</td>
           <td><button class="btn btn-secondary btn-sm" [routerLink]="['/exams/forms', exam.id]">Edit</button></td>
           <td><button class="btn btn-danger btn-sm" (click)="delete(exam)">Delete</button></td>
