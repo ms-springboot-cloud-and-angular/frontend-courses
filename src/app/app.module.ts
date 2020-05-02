@@ -19,6 +19,8 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatButtonModule } from '@angular/material/button';
 import { AssignStudentsComponent } from './components/courses/assign-students.component';
 import { MatCardModule } from '@angular/material/card';
+import { MatTabsModule } from '@angular/material/tabs';
+
 
 @NgModule({
   declarations: [
@@ -44,7 +46,8 @@ import { MatCardModule } from '@angular/material/card';
     MatCheckboxModule,
     MatButtonModule,
     ReactiveFormsModule,
-    MatCardModule
+    MatCardModule,
+    MatTabsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
