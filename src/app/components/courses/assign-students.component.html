@@ -50,7 +50,7 @@
       </mat-tab>
       <mat-tab label="Students">
 
-        <table mat-table [dataSource]="students" class="mat-elevation-z8 mx-3" style="width: 75%;">
+        <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 mx-3" style="width: 75%;">
 
 
           <ng-container matColumnDef="id">
@@ -84,6 +84,10 @@
           <tr mat-row *matRowDef="let student; columns: displayedStudentsColumns;">
           </tr>
         </table>
+
+
+        <mat-paginator [pageSizeOptions]="pageSizeOptions" showFirstLastButtons class="float-left mx-2">
+        </mat-paginator>
 
 
       </mat-tab>

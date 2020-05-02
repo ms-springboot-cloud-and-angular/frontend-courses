@@ -1,11 +1,13 @@
+import { MatPaginator } from '@angular/material/paginator';
 import Swal from 'sweetalert2';
 import { Student } from './../../models/student';
 import { StudentService } from './../../services/student.service';
 import { CourseService } from './../../services/course.service';
 import { ActivatedRoute } from '@angular/router';
 import { Course } from './../../models/course';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { SelectionModel } from '@angular/cdk/collections';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'app-assign-students',
@@ -21,6 +23,10 @@ export class AssignStudentsComponent implements OnInit {
   displayedColumns: String[] = ['name', 'lastname', 'select'];
   displayedStudentsColumns: String[] = ['id', 'name', 'lastname', 'email', 'delete'];
 
+  dataSource: MatTableDataSource<Student>;
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  pageSizeOptions: number[] = [5, 10, 25, 100];
+
   selectionModel: SelectionModel<Student> = new SelectionModel<Student>(true, []);
 
   tabIndex: number = 0;
@@ -34,8 +40,16 @@ export class AssignStudentsComponent implements OnInit {
       this.courseService.view(id).subscribe(c => {
         this.course = c;
         this.students = this.course.students;
+        this.initPaginator();
       });
     });
+  }
+
+
+  public initPaginator(): void {
+    this.dataSource = new MatTableDataSource<Student>(this.students);
+    this.dataSource.paginator = this.paginator;
+    this.paginator._intl.itemsPerPageLabel = 'Rows per page';
   }
 
   public filter(name: String): void {
@@ -74,6 +88,7 @@ export class AssignStudentsComponent implements OnInit {
       this.tabIndex = 2;
       Swal.fire('Assign:', `Students assigns successfully in course ${this.course.name}`, 'success');
       this.students = this.students.concat(this.selectionModel.selected);
+      this.initPaginator();
       this.studentsToAssign = [];
       this.selectionModel.clear();
     }, e => {
@@ -98,9 +113,9 @@ export class AssignStudentsComponent implements OnInit {
       confirmButtonText: 'Yes, delete it!',
     }).then((result) => {
       if (result.value) {
-
         this.courseService.deleteStudent(this.course, student).subscribe(course => {
           this.students = this.students.filter(s => s.id !== student.id);
+          this.initPaginator();
           Swal.fire('Deleted', `Student deleted successfully the course ${course.name}`, 'success');
         });
       }
