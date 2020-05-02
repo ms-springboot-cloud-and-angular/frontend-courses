@@ -20,6 +20,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { AssignStudentsComponent } from './components/courses/assign-students.component';
 import { MatCardModule } from '@angular/material/card';
 import { MatTabsModule } from '@angular/material/tabs';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { AssignExamsComponent } from './components/courses/assign-exams.component';
 
 
 @NgModule({
@@ -31,7 +33,8 @@ import { MatTabsModule } from '@angular/material/tabs';
     StudentsFormsComponent,
     CoursesFormsComponent,
     ExamFormsComponent,
-    AssignStudentsComponent
+    AssignStudentsComponent,
+    AssignExamsComponent
   ],
   imports: [
     BrowserModule,
@@ -47,7 +50,8 @@ import { MatTabsModule } from '@angular/material/tabs';
     MatButtonModule,
     ReactiveFormsModule,
     MatCardModule,
-    MatTabsModule
+    MatTabsModule,
+    MatAutocompleteModule
   ],
   providers: [],
   bootstrap: [AppComponent]

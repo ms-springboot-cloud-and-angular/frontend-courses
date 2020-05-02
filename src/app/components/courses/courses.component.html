@@ -9,6 +9,7 @@
           <th>id</th>
           <th>name</th>
           <th>Students</th>
+          <th>Exams</th>
           <th>createAt</th>
           <th>Edit</th>
           <th>Delete</th>
@@ -19,7 +20,11 @@
           <td>{{course.id}}</td>
           <td>{{course.name | uppercase}}</td>
           <td><button class="btn btn-info btn-sm" [routerLink]="['/courses/assign-students', course.id]"
-              routerLinkActive="router-link-active">Add ({{course.students.length}})</button></td>
+              routerLinkActive="router-link-active">Add ({{course.students.length}})</button>
+          </td>
+          <td><button class="btn btn-info btn-sm" [routerLink]="['/courses/assign-exams', course.id]"
+              routerLinkActive="router-link-active">Add ({{course.exams.length}})</button>
+          </td>
           <td>{{course.createAt | date: 'yyyy/MM/dd'}}</td>
           <td><button class="btn btn-secondary btn-sm" [routerLink]="['/courses/forms', course.id]">Edit</button></td>
           <td><button class="btn btn-danger btn-sm" (click)="delete(course)">Delete</button></td>

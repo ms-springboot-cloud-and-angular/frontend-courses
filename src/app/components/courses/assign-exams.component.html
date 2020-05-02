@@ -1,0 +1,8 @@
+<mat-form-field>
+  <input matInput placeholder="Add exam" [formControl]="autocompleteControl" [matAutocomplete]="autocomplete" />
+  <mat-autocomplete #autocomplete="matAutocomplete" [displayWith]="showExamName">
+    <mat-option *ngFor="let exam of examsFIlters" [value]="exam">
+      {{exam.name}}
+    </mat-option>
+  </mat-autocomplete>
+</mat-form-field>
