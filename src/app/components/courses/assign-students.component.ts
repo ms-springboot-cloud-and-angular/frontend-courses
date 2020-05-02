@@ -19,7 +19,7 @@ export class AssignStudentsComponent implements OnInit {
   students: Student[] = [];
 
   displayedColumns: String[] = ['name', 'lastname', 'select'];
-  displayedStudentsColumns: String[] = ['id', 'name', 'lastname', 'email'];
+  displayedStudentsColumns: String[] = ['id', 'name', 'lastname', 'email', 'delete'];
 
   selectionModel: SelectionModel<Student> = new SelectionModel<Student>(true, []);
 
@@ -86,5 +86,25 @@ export class AssignStudentsComponent implements OnInit {
     });
   }
 
+  public deleteStudent(student: Student): void {
+
+    Swal.fire({
+      title: 'Are you sure?',
+      text: `Are you sure you want to delete the ${student.name} ?`,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!',
+    }).then((result) => {
+      if (result.value) {
+
+        this.courseService.deleteStudent(this.course, student).subscribe(course => {
+          this.students = this.students.filter(s => s.id !== student.id);
+          Swal.fire('Deleted', `Student deleted successfully the course ${course.name}`, 'success');
+        });
+      }
+    });
+  }
 
 }
