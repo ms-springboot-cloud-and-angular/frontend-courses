@@ -1,3 +1,5 @@
+import { Observable } from 'rxjs';
+import { Student } from './../models/student';
 import { BASE_ENDPOINT } from './../config/app';
 import { Course } from './../models/course';
 import { Injectable } from '@angular/core';
@@ -13,6 +15,10 @@ export class CourseService extends CommonService<Course> {
 
   constructor(httpClient: HttpClient) {
     super(httpClient);
+  }
+
+  public assignStudents(course: Course, students: Student[]): Observable<Course> {
+    return this.httpClient.put<Course>(`${this.baseEndpoint}/${course.id}/assign-students`, students, { headers: this.headers });
   }
 
 }
