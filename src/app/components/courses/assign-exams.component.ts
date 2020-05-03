@@ -22,6 +22,8 @@ export class AssignExamsComponent implements OnInit {
   examsAssigns: Exam[] = [];
   exams: Exam[] = [];
   displayedColumns: string[] = ['name', 'subject', 'delete'];
+  displayedExamsColumns: string[] = ['id', 'name', 'subject'];
+  tabIndex: number = 0;
 
   constructor(private route: ActivatedRoute, private router: Router, private courseService: CourseService
     , private examService: ExamService) { }
@@ -79,6 +81,7 @@ export class AssignExamsComponent implements OnInit {
       this.exams = this.exams.concat(this.examsAssigns);
       this.examsAssigns = [];
       Swal.fire('Assigned', `Exams successfully assigned to the course ${this.course.name}`, 'success');
+      this.tabIndex = 2;
     });
   }
 
