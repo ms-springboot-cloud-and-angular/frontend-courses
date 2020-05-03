@@ -20,7 +20,7 @@ export class AssignExamsComponent implements OnInit {
   autocompleteControl = new FormControl();
   examsFIlters: Exam[] = [];
   examsAssigns: Exam[] = [];
-  displayedColumns: string[] = ['name', 'subject'];
+  displayedColumns: string[] = ['name', 'subject', 'delete'];
 
   constructor(private route: ActivatedRoute, private router: Router, private courseService: CourseService
     , private examService: ExamService) { }
@@ -63,6 +63,10 @@ export class AssignExamsComponent implements OnInit {
       }
     })
     return exists;
+  }
+
+  public removeAssignExam(exam: Exam): void {
+    this.examsAssigns = this.examsAssigns.filter(e => e.id !== exam.id);
   }
 
 }
