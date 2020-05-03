@@ -1,10 +1,12 @@
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
 import Swal from 'sweetalert2';
 import { ExamService } from './../../services/exam.service';
 import { Exam } from 'src/app/models/exam';
 import { CourseService } from './../../services/course.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Course } from 'src/app/models/course';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { map, flatMap } from 'rxjs/operators';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
@@ -25,6 +27,10 @@ export class AssignExamsComponent implements OnInit {
   displayedExamsColumns: string[] = ['id', 'name', 'subject', 'delete'];
   tabIndex: number = 0;
 
+  dataSource: MatTableDataSource<Exam>;
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  pageSizeOptions: number[] = [5, 10, 25, 100];
+
   constructor(private route: ActivatedRoute, private router: Router, private courseService: CourseService
     , private examService: ExamService) { }
 
@@ -34,6 +40,7 @@ export class AssignExamsComponent implements OnInit {
       this.courseService.view(id).subscribe(c => {
         this.course = c;
         this.exams = this.course.exams;
+        this.initPaginator();
       });
     });
 
@@ -41,6 +48,12 @@ export class AssignExamsComponent implements OnInit {
       map(value => typeof value === 'string' ? value : value.name),
       flatMap(value => value ? this.examService.filterByName(value) : [])
     ).subscribe(exams => this.examsFIlters = exams);
+  }
+
+  private initPaginator(): void {
+    this.dataSource = new MatTableDataSource<Exam>(this.exams);
+    this.dataSource.paginator = this.paginator;
+    this.paginator._intl.itemsPerPageLabel = 'Rows per page';
   }
 
   public showExamName(exam?: Exam): string {
@@ -52,13 +65,13 @@ export class AssignExamsComponent implements OnInit {
     if (!this.exists(exam.id)) {
       this.examsAssigns = this.examsAssigns.concat(exam);
       console.log(this.examsAssigns);
-      this.autocompleteControl.setValue('');
-      event.option.deselect();
-      event.option.focus();
     }
     else {
       Swal.fire('Error:', `The exam "${exam.name}" is already assigned to the course`, 'error');
     }
+    this.autocompleteControl.setValue('');
+    event.option.deselect();
+    event.option.focus();
   }
 
   private exists(id: number): boolean {
@@ -79,6 +92,7 @@ export class AssignExamsComponent implements OnInit {
     console.log(this.examsAssigns);
     this.courseService.assignExams(this.course, this.examsAssigns).subscribe(c => {
       this.exams = this.exams.concat(this.examsAssigns);
+      this.initPaginator();
       this.examsAssigns = [];
       Swal.fire('Assigned', `Exams successfully assigned to the course ${this.course.name}`, 'success');
       this.tabIndex = 2;
@@ -98,7 +112,7 @@ export class AssignExamsComponent implements OnInit {
       if (result.value) {
         this.courseService.deleteExam(this.course, exam).subscribe(course => {
           this.exams = this.exams.filter(e => e.id !== exam.id);
-          //this.initPaginator();
+          this.initPaginator();
           Swal.fire('Deleted', `Exam "${exam.name}" deleted successfully the course "${course.name}"`, 'success');
         });
       }

@@ -46,7 +46,7 @@ export class AssignStudentsComponent implements OnInit {
   }
 
 
-  public initPaginator(): void {
+  private initPaginator(): void {
     this.dataSource = new MatTableDataSource<Student>(this.students);
     this.dataSource.paginator = this.paginator;
     this.paginator._intl.itemsPerPageLabel = 'Rows per page';
