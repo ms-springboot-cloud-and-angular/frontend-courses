@@ -1,3 +1,4 @@
+import Swal from 'sweetalert2';
 import { ExamService } from './../../services/exam.service';
 import { Exam } from 'src/app/models/exam';
 import { CourseService } from './../../services/course.service';
@@ -6,6 +7,7 @@ import { Course } from 'src/app/models/course';
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { map, flatMap } from 'rxjs/operators';
+import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 
 @Component({
   selector: 'app-assign-exams',
@@ -17,6 +19,8 @@ export class AssignExamsComponent implements OnInit {
   course: Course;
   autocompleteControl = new FormControl();
   examsFIlters: Exam[] = [];
+  examsAssigns: Exam[] = [];
+  displayedColumns: string[] = ['name', 'subject'];
 
   constructor(private route: ActivatedRoute, private router: Router, private courseService: CourseService
     , private examService: ExamService) { }
@@ -35,6 +39,30 @@ export class AssignExamsComponent implements OnInit {
 
   public showExamName(exam?: Exam): string {
     return exam ? exam.name : '';
+  }
+
+  public examsSelecteds(event: MatAutocompleteSelectedEvent): void {
+    const exam = event.option.value as Exam;
+    if (!this.exists(exam.id)) {
+      this.examsAssigns = this.examsAssigns.concat(exam);
+      console.log(this.examsAssigns);
+      this.autocompleteControl.setValue('');
+      event.option.deselect();
+      event.option.focus();
+    }
+    else {
+      Swal.fire('Error:', `The exam "${exam.name}" is already assigned to the course`, 'error');
+    }
+  }
+
+  private exists(id: number): boolean {
+    let exists = false;
+    this.examsAssigns.concat(this.course.exams).forEach(e => {
+      if (id === e.id) {
+        exists = true;
+      }
+    })
+    return exists;
   }
 
 }
