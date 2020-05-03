@@ -29,4 +29,8 @@ export class CourseService extends CommonService<Course> {
   public assignExams(course: Course, exams: Exam[]): Observable<Course> {
     return this.httpClient.put<Course>(`${this.baseEndpoint}/${course.id}/assign-exams`, exams, { headers: this.headers });
   }
+
+  public deleteExam(course: Course, exams: Exam): Observable<Course> {
+    return this.httpClient.put<Course>(`${this.baseEndpoint}/${course.id}/delete-exam`, exams, { headers: this.headers });
+  }
 }

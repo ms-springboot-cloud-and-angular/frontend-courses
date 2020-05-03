@@ -116,7 +116,7 @@ export class AssignStudentsComponent implements OnInit {
         this.courseService.deleteStudent(this.course, student).subscribe(course => {
           this.students = this.students.filter(s => s.id !== student.id);
           this.initPaginator();
-          Swal.fire('Deleted', `Student deleted successfully the course ${course.name}`, 'success');
+          Swal.fire('Deleted', `Student "${student.name}" deleted successfully the course "${course.name}"`, 'success');
         });
       }
     });

@@ -22,7 +22,7 @@ export class AssignExamsComponent implements OnInit {
   examsAssigns: Exam[] = [];
   exams: Exam[] = [];
   displayedColumns: string[] = ['name', 'subject', 'delete'];
-  displayedExamsColumns: string[] = ['id', 'name', 'subject'];
+  displayedExamsColumns: string[] = ['id', 'name', 'subject', 'delete'];
   tabIndex: number = 0;
 
   constructor(private route: ActivatedRoute, private router: Router, private courseService: CourseService
@@ -82,6 +82,26 @@ export class AssignExamsComponent implements OnInit {
       this.examsAssigns = [];
       Swal.fire('Assigned', `Exams successfully assigned to the course ${this.course.name}`, 'success');
       this.tabIndex = 2;
+    });
+  }
+
+  public deleteExam(exam: Exam): void {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: `Are you sure you want to delete the ${exam.name} ?`,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!',
+    }).then((result) => {
+      if (result.value) {
+        this.courseService.deleteExam(this.course, exam).subscribe(course => {
+          this.exams = this.exams.filter(e => e.id !== exam.id);
+          //this.initPaginator();
+          Swal.fire('Deleted', `Exam "${exam.name}" deleted successfully the course "${course.name}"`, 'success');
+        });
+      }
     });
   }
 
