@@ -20,6 +20,7 @@ export class AssignExamsComponent implements OnInit {
   autocompleteControl = new FormControl();
   examsFIlters: Exam[] = [];
   examsAssigns: Exam[] = [];
+  exams: Exam[] = [];
   displayedColumns: string[] = ['name', 'subject', 'delete'];
 
   constructor(private route: ActivatedRoute, private router: Router, private courseService: CourseService
@@ -28,7 +29,10 @@ export class AssignExamsComponent implements OnInit {
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
       const id: number = +params.get('id');
-      this.courseService.view(id).subscribe(c => this.course = c);
+      this.courseService.view(id).subscribe(c => {
+        this.course = c;
+        this.exams = this.course.exams;
+      });
     });
 
     this.autocompleteControl.valueChanges.pipe(
@@ -57,7 +61,7 @@ export class AssignExamsComponent implements OnInit {
 
   private exists(id: number): boolean {
     let exists = false;
-    this.examsAssigns.concat(this.course.exams).forEach(e => {
+    this.examsAssigns.concat(this.exams).forEach(e => {
       if (id === e.id) {
         exists = true;
       }
@@ -67,6 +71,15 @@ export class AssignExamsComponent implements OnInit {
 
   public removeAssignExam(exam: Exam): void {
     this.examsAssigns = this.examsAssigns.filter(e => e.id !== exam.id);
+  }
+
+  public assign(): void {
+    console.log(this.examsAssigns);
+    this.courseService.assignExams(this.course, this.examsAssigns).subscribe(c => {
+      this.exams = this.exams.concat(this.examsAssigns);
+      this.examsAssigns = [];
+      Swal.fire('Assigned', `Exams successfully assigned to the course ${this.course.name}`, 'success');
+    });
   }
 
 }

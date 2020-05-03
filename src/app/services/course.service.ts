@@ -1,3 +1,4 @@
+import { Exam } from 'src/app/models/exam';
 import { Observable } from 'rxjs';
 import { Student } from './../models/student';
 import { BASE_ENDPOINT } from './../config/app';
@@ -25,4 +26,7 @@ export class CourseService extends CommonService<Course> {
     return this.httpClient.put<Course>(`${this.baseEndpoint}/${course.id}/delete-student`, student, { headers: this.headers });
   }
 
+  public assignExams(course: Course, exams: Exam[]): Observable<Course> {
+    return this.httpClient.put<Course>(`${this.baseEndpoint}/${course.id}/assign-exams`, exams, { headers: this.headers });
+  }
 }
