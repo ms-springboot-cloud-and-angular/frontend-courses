@@ -33,4 +33,8 @@ export class CourseService extends CommonService<Course> {
   public deleteExam(course: Course, exams: Exam): Observable<Course> {
     return this.httpClient.put<Course>(`${this.baseEndpoint}/${course.id}/delete-exam`, exams, { headers: this.headers });
   }
+
+  public getCourseByStudentId(student: Student): Observable<Course> {
+    return this.httpClient.get<Course>(`${this.baseEndpoint}/student/${student.id}`);
+  }
 }

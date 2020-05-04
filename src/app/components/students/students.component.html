@@ -12,6 +12,7 @@
           <th>lastname</th>
           <th>email</th>
           <th>createAt</th>
+          <th>Exams</th>
           <th>Edit</th>
           <th>Delete</th>
         </tr>
@@ -20,27 +21,25 @@
         <tr *ngFor="let student of list">
           <td>{{student.id}}</td>
           <td>
-            <img *ngIf="student.photoHashCode" [src]="baseEndpoint +'/uploads/photo/'+student.id +'?hash='+student.photoHashCode"
-                class="img-thumbnail rounded"  style="width: 64px; cursor: pointer;"/>
-            <img *ngIf="!student.photoHashCode" src="/assets/images/profile.png"
-                class="img-thumbnail rounded"  style="width: 64px; cursor: pointer;"/>
+            <img *ngIf="student.photoHashCode"
+              [src]="baseEndpoint +'/uploads/photo/'+student.id +'?hash='+student.photoHashCode"
+              class="img-thumbnail rounded" style="width: 64px; cursor: pointer;" />
+            <img *ngIf="!student.photoHashCode" src="/assets/images/profile.png" class="img-thumbnail rounded"
+              style="width: 64px; cursor: pointer;" />
           </td>
           <td>{{student.name | uppercase}}</td>
           <td>{{student.lastname | uppercase}}</td>
           <td>{{student.email| lowercase}}</td>
           <td>{{student.createAt | date: 'yyyy/MM/dd'}}</td>
+          <td><button class="btn btn-primary btn-sm"
+              [routerLink]="['/students/answer-exam', student.id]">respond</button></td>
           <td><button class="btn btn-secondary btn-sm" [routerLink]="['/students/forms', student.id]">Edit</button></td>
           <td><button class="btn btn-danger btn-sm" (click)="delete(student)">Delete</button></td>
         </tr>
       </tbody>
     </table>
-    <mat-paginator [length]="totalRows"
-              [pageSize]="totalPerPage"
-              [pageIndex]="currentPage"
-              [pageSizeOptions]="pageSizeOptions"
-              (page) = "pageable($event)"
-              showFirstLastButtons
-              class="float-left mx-2">
+    <mat-paginator [length]="totalRows" [pageSize]="totalPerPage" [pageIndex]="currentPage"
+      [pageSizeOptions]="pageSizeOptions" (page)="pageable($event)" showFirstLastButtons class="float-left mx-2">
     </mat-paginator>
   </div>
 </div>
