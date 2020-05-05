@@ -25,6 +25,8 @@ import { AssignExamsComponent } from './components/courses/assign-exams.componen
 import { AnswerExamComponent } from './components/students/answer-exam.component';
 import { AnswerExamDialogComponent } from './components/students/answer-exam-dialog.component';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatExpansionModule } from '@angular/material/expansion';
+
 
 @NgModule({
   declarations: [
@@ -59,7 +61,8 @@ import { MatDialogModule } from '@angular/material/dialog';
     MatCardModule,
     MatTabsModule,
     MatAutocompleteModule,
-    MatDialogModule
+    MatDialogModule,
+    MatExpansionModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,3 +1,6 @@
+import Swal from 'sweetalert2';
+import { Answer } from './../../models/answer';
+import { AnswerService } from './../../services/answer.service';
 import { AnswerExamDialogComponent } from './answer-exam-dialog.component';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
@@ -29,6 +32,7 @@ export class AnswerExamComponent implements OnInit {
   constructor(private route: ActivatedRoute,
     private studentService: StudentService,
     private courseService: CourseService,
+    private answerService: AnswerService,
     public dialog: MatDialog) { }
 
   ngOnInit(): void {
@@ -54,8 +58,16 @@ export class AnswerExamComponent implements OnInit {
       data: { course: this.course, student: this.student, exam: exam }
     });
 
-    dialogRef.afterClosed().subscribe(answers => {
-      console.log('after closed', answers);
+    dialogRef.afterClosed().subscribe((answersMap: Map<number, Answer>) => {
+      console.log('after closed', answersMap);
+      if (answersMap) {
+        const answers: Answer[] = Array.from(answersMap.values());
+        this.answerService.create(answers).subscribe(as => {
+          exam.answered = true;
+          Swal.fire('Sent', `Answers sent successfully`, 'success');
+          console.log(as);
+        });
+      }
     });
   }
 

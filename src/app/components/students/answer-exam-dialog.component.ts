@@ -1,3 +1,5 @@
+import { Answer } from './../../models/answer';
+import { Question } from 'src/app/models/question';
 import { Exam } from 'src/app/models/exam';
 import { Student } from './../../models/student';
 import { Course } from 'src/app/models/course';
@@ -14,7 +16,7 @@ export class AnswerExamDialogComponent implements OnInit {
   course: Course;
   student: Student;
   exam: Exam;
-  answers = ['any answer'];
+  answers: Map<number, Answer> = new Map<number, Answer>();
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any,
     public dialogRef: MatDialogRef<AnswerExamDialogComponent>) {
@@ -29,5 +31,22 @@ export class AnswerExamDialogComponent implements OnInit {
 
   public cancel(): void {
     this.dialogRef.close();
+  }
+
+  public processAnswer(question: Question, event: any): void {
+    const text = event.target.value as string;
+    const answer = new Answer();
+    answer.student = this.student;
+    answer.question = question;
+
+    const exam: Exam = new Exam();
+    exam.id = this.exam.id;
+    exam.name = this.exam.name;
+
+    answer.question.exam = exam;
+    answer.text = text;
+
+    this.answers.set(question.id, answer);
+    console.log(this.answers);
   }
 }
