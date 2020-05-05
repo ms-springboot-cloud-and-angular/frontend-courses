@@ -1,3 +1,4 @@
+import { AnswerExamDialogComponent } from './answer-exam-dialog.component';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { CourseService } from './../../services/course.service';
@@ -7,6 +8,7 @@ import { Exam } from 'src/app/models/exam';
 import { Course } from 'src/app/models/course';
 import { Student } from './../../models/student';
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-answer-exam',
@@ -26,7 +28,8 @@ export class AnswerExamComponent implements OnInit {
 
   constructor(private route: ActivatedRoute,
     private studentService: StudentService,
-    private courseService: CourseService) { }
+    private courseService: CourseService,
+    public dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
@@ -43,6 +46,17 @@ export class AnswerExamComponent implements OnInit {
       });
     });
 
+  }
+
+  public respondExam(exam: Exam): void {
+    const dialogRef = this.dialog.open(AnswerExamDialogComponent, {
+      width: '750px',
+      data: { course: this.course, student: this.student, exam: exam }
+    });
+
+    dialogRef.afterClosed().subscribe(answers => {
+      console.log('after closed', answers);
+    });
   }
 
 }

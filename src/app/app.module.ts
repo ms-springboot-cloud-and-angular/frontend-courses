@@ -23,7 +23,8 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { AssignExamsComponent } from './components/courses/assign-exams.component';
 import { AnswerExamComponent } from './components/students/answer-exam.component';
-
+import { AnswerExamDialogComponent } from './components/students/answer-exam-dialog.component';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,11 @@ import { AnswerExamComponent } from './components/students/answer-exam.component
     ExamFormsComponent,
     AssignStudentsComponent,
     AssignExamsComponent,
-    AnswerExamComponent
+    AnswerExamComponent,
+    AnswerExamDialogComponent
+  ],
+  entryComponents: [
+    AnswerExamDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -53,7 +58,8 @@ import { AnswerExamComponent } from './components/students/answer-exam.component
     ReactiveFormsModule,
     MatCardModule,
     MatTabsModule,
-    MatAutocompleteModule
+    MatAutocompleteModule,
+    MatDialogModule
   ],
   providers: [],
   bootstrap: [AppComponent]
