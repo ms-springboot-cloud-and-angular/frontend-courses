@@ -26,6 +26,7 @@ import { AnswerExamComponent } from './components/students/answer-exam.component
 import { AnswerExamDialogComponent } from './components/students/answer-exam-dialog.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { ViewExameDialogComponent } from './components/students/view-exame-dialog.component';
 
 
 @NgModule({
@@ -40,10 +41,12 @@ import { MatExpansionModule } from '@angular/material/expansion';
     AssignStudentsComponent,
     AssignExamsComponent,
     AnswerExamComponent,
-    AnswerExamDialogComponent
+    AnswerExamDialogComponent,
+    ViewExameDialogComponent
   ],
   entryComponents: [
-    AnswerExamDialogComponent
+    AnswerExamDialogComponent,
+    ViewExameDialogComponent
   ],
   imports: [
     BrowserModule,

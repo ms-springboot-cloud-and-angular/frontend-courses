@@ -1,3 +1,4 @@
+import { ViewExameDialogComponent } from './view-exame-dialog.component';
 import Swal from 'sweetalert2';
 import { Answer } from './../../models/answer';
 import { AnswerService } from './../../services/answer.service';
@@ -68,6 +69,18 @@ export class AnswerExamComponent implements OnInit {
           console.log(as);
         });
       }
+    });
+  }
+
+  public viewExam(exam: Exam): void {
+    this.answerService.getAnswerByStudentAndExam(this.student, exam).subscribe(answers => {
+      const dialogRef = this.dialog.open(ViewExameDialogComponent, {
+        width: '750px',
+        data: { course: this.course, exam: exam, answers: answers }
+      });
+      dialogRef.afterClosed().subscribe(() => {
+        console.log('after closed vie exam');
+      });
     });
   }
 

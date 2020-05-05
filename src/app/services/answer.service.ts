@@ -1,3 +1,5 @@
+import { Exam } from 'src/app/models/exam';
+import { Student } from './../models/student';
 import { BASE_ENDPOINT } from './../config/app';
 import { Observable } from 'rxjs';
 import { Answer } from './../models/answer';
@@ -14,7 +16,11 @@ export class AnswerService {
 
   constructor(private HttpClient: HttpClient) { }
 
-  create(answers: Answer[]): Observable<Answer[]> {
+  public create(answers: Answer[]): Observable<Answer[]> {
     return this.HttpClient.post<Answer[]>(this.baseEndpoint, answers, { headers: this.headers });
+  }
+
+  public getAnswerByStudentAndExam(student: Student, exam: Exam): Observable<Answer[]> {
+    return this.HttpClient.get<Answer[]>(`${this.baseEndpoint}/student/${student.id}/exam/${exam.id}`);
   }
 }
